@@ -25,11 +25,31 @@
    signature-name
    "\n"))
 
-(write-file
- 'stdout
- (letter "Matthew" "Fisler" "Felleisen"))
+#| (write-file
+    'stdout
+    (letter "Matthew" "Fisler" "Felleisen"))
+   
+   ; 3 inputs of my choice
+   (write-file
+    'stdout
+ (letter "First" "Last" "Sig")) |#
 
-; 3 inputs of my choice
-(write-file
- 'stdout
- (letter "First" "Last" "Sig"))
+; Define main from exercise description
+(define (main in-fst in-lst in-signature out)
+  (write-file out
+              (letter (read-file in-fst)
+                      (read-file in-lst)
+                      (read-file in-signature))))
+
+; Create file with first name from prompted user input
+(write-file "first.txt"
+            (read-file 'stdin))
+; Create file with last name from prompted user input
+(write-file "last.txt"
+            (read-file 'stdin))
+; Create file with signature name
+(write-file "sig.txt"
+            "O5-9")
+
+; Invoke main on the files
+(main "first.txt" "last.txt" "sig.txt" "output.txt")
