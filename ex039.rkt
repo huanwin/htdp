@@ -3,6 +3,7 @@
 (require 2htdp/image)
 
 (define WHEEL-RADIUS 5)
+(define WHEEL-DIAM (* WHEEL-RADIUS 2))
 (define WHEEL-DISTANCE (* WHEEL-RADIUS 5))
 
 (define WHEEL
@@ -11,9 +12,9 @@
 ; design automobile image (and scale it with WHEEL-RADIUS)
 ; Make the car's body 5 times the length of the car
 (define CAR-BODY-WIDTH
-  (* WHEEL-RADIUS 5))
+  (* WHEEL-DIAM 5))
 (define CAR-BODY-HEIGHT
-  (* WHEEL-RADIUS 1.25))
+  (* WHEEL-DIAM 1.25))
 (define CAR-CAB-WIDTH
   (/ CAR-BODY-WIDTH 2))
 (define CAR-CAB-HEIGHT
@@ -35,10 +36,15 @@
               WHEEL))
 (define CAR
   (overlay/xy WHEELS
-              WHEEL-RADIUS
-              (- WHEEL-RADIUS)
+              (- WHEEL-DIAM)
+              (- (+ WHEEL-RADIUS WHEEL-DIAM))
               CAR-CHASSIS))
 CAR
 
-; implement tock
-; implement checks for tock
+; WorldState -> WorldState
+; moves the car by 3 pixels for every clock tick
+(check-expect (tock 3) 6)
+(check-expect (tock 9) 12)
+
+(define (tock cw)
+  (+ cw 3))
